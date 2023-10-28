@@ -24,8 +24,8 @@ namespace api.Services
             var matchesDtos = matches.ConvertAll(x => new MatchResponseDTO
             {
                 Id = x.Id,
-                Winner = conversion(x.Players.Find(p => p.Id == x.WinnerId)),
-                Loser = conversion(x.Players.Find(p => p.Id == x.LoserId)),
+                Winner = convertPlayerModelToSimplPlayerDTO(x.Players.Find(p => p.Id == x.WinnerId)),
+                Loser = convertPlayerModelToSimplPlayerDTO(x.Players.Find(p => p.Id == x.LoserId)),
             });
             return matchesDtos;
         }
@@ -38,7 +38,7 @@ namespace api.Services
                 throw new ArgumentException("Match not found");
             }
 
-            MatchResponseDTO? response = mainconversion(match);
+            MatchResponseDTO? response = convertMatchModelToMatchResponseDTO(match);
             if (response == null)
             {
                 return null;
@@ -132,7 +132,7 @@ namespace api.Services
 
             obtainedmatch.WinnerId = matchDto.WinnerId;
             obtainedmatch.LoserId = matchDto.LoserId;
-            MatchResponseDTO? response = mainconversion(obtainedmatch);
+            MatchResponseDTO? response = convertMatchModelToMatchResponseDTO(obtainedmatch);
             if (response == null)
             {
                 throw new ArgumentException("Error occurred in conversion of data types");
@@ -142,7 +142,7 @@ namespace api.Services
             return response;
         }
 
-        private SimplPlayerDTO? conversion(PlayerModel? playerModel)
+        private SimplPlayerDTO? convertPlayerModelToSimplPlayerDTO(PlayerModel? playerModel)
         {
             if (playerModel == null)
             {
@@ -154,15 +154,15 @@ namespace api.Services
             return responseDto;
         }
 
-        private MatchResponseDTO? mainconversion(MatchModel matchModel)
+        private MatchResponseDTO? convertMatchModelToMatchResponseDTO(MatchModel matchModel)
         {
             MatchResponseDTO response = new MatchResponseDTO();
             PlayerModel? winner = matchModel.Players.Find(p => p.Id == matchModel.WinnerId);
             PlayerModel? loser = matchModel.Players.Find(p => p.Id == matchModel.LoserId);
             if (winner != null && loser != null)
             {
-                response.Winner = conversion(winner);
-                response.Loser = conversion(loser);
+                response.Winner = convertPlayerModelToSimplPlayerDTO(winner);
+                response.Loser = convertPlayerModelToSimplPlayerDTO(loser);
                 return response;
             }
             return null;
