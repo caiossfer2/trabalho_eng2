@@ -61,39 +61,32 @@ namespace api.Services
         public async Task<ActionResult<MatchModel>?> create([FromBody] MatchDTO match)
         {
 
-            if (match.LoserId != match.WinnerId)
-            {
-                if (match.LoserId > 0 && match.WinnerId > 0)
-                {
-                    PlayerModel? winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.WinnerId);
-                    PlayerModel? loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.LoserId);
-                    if (winner != null && loser != null)
-                    {
-                        MatchModel matchModel = new MatchModel
-                        {
-                            WinnerId = match.WinnerId,
-                            LoserId = match.LoserId
-                        };
-                        matchModel.Players.Add(winner);
-                        matchModel.Players.Add(loser);
-                        await _context.Matches.AddAsync(matchModel);
-                        await _context.SaveChangesAsync();
-                        return matchModel;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("Players ids must be greather than zero");
-                }
-            }
-            else
+            if (match.LoserId == match.WinnerId)
             {
                 throw new ArgumentException("Players ids must be different");
             }
+
+            if (match.LoserId < 0 || match.WinnerId < 0)
+            {
+                throw new ArgumentException("Players ids must be greather than zero");
+            }
+
+            PlayerModel? winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.WinnerId);
+            PlayerModel? loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.LoserId);
+            if (winner == null || loser == null)
+            {
+                return null;
+            }
+            MatchModel matchModel = new MatchModel
+            {
+                WinnerId = match.WinnerId,
+                LoserId = match.LoserId
+            };
+            matchModel.Players.Add(winner);
+            matchModel.Players.Add(loser);
+            await _context.Matches.AddAsync(matchModel);
+            await _context.SaveChangesAsync();
+            return matchModel;
         }
 
 
@@ -166,6 +159,6 @@ namespace api.Services
                 return response;
             }
             return null;
-        }   
+        }
     }
 }
