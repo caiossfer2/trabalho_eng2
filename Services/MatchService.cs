@@ -109,19 +109,10 @@ namespace api.Services
             }
 
             PlayerModel? winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.WinnerId);
-            PlayerModel? playerInList = obtainedmatch.Players.Find(p => p.Id == matchDto.WinnerId);
-            if (playerInList == null && winner != null)
-            {
-                obtainedmatch.Players.Add(winner);
-            }
+            addPlayerInListIfHeIsNotAlreadyThere(ref obtainedmatch, winner,  matchDto.WinnerId);
 
             PlayerModel? loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.LoserId);
-            playerInList = obtainedmatch.Players.Find(p => p.Id == matchDto.LoserId);
-            if (playerInList == null && loser != null)
-            {
-                obtainedmatch.Players.Add(loser);
-            }
-
+            addPlayerInListIfHeIsNotAlreadyThere(ref obtainedmatch, loser, matchDto.LoserId);
 
             obtainedmatch.WinnerId = matchDto.WinnerId;
             obtainedmatch.LoserId = matchDto.LoserId;
@@ -134,6 +125,8 @@ namespace api.Services
             await _context.SaveChangesAsync();
             return response;
         }
+
+
 
         private SimplPlayerDTO? convertPlayerModelToSimplPlayerDTO(PlayerModel? playerModel)
         {
@@ -159,6 +152,18 @@ namespace api.Services
                 return response;
             }
             return null;
+        }
+
+        private  void addPlayerInListIfHeIsNotAlreadyThere(ref MatchModel match, PlayerModel? player, int playerId)
+        {
+            if(player == null){
+                throw new ArgumentException("The winner or loser does not exist");
+            }
+            PlayerModel? playerInList = match.Players.Find(p => p.Id == playerId);
+            if (playerInList == null && player != null)
+            {
+                match.Players.Add(player);
+            }
         }
     }
 }
