@@ -47,6 +47,27 @@ namespace Webapi.Controllers
             }
         }
 
+        [HttpGet("ranking")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<RankedPlayer>>> getRanking()
+        {
+            try
+            {
+                List<RankedPlayer> ranking = (await _service.getRanking())?.Value;
+                if (ranking == null)
+                {
+                    return NotFound();
+
+                }
+                return Ok(ranking);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<GetPlayerDTO>> getById(int id)

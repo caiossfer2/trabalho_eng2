@@ -1,4 +1,5 @@
 using System;
+using Webapi.Data.Dtos;
 
 namespace Webapi.Model
 {
@@ -12,5 +13,6 @@ namespace Webapi.Model
         public int WinnerId { get; set; }
         public int LoserId { get; set; }
         public List<PlayerModel> Players { get; set; }
+
     }
 }

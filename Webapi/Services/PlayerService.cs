@@ -47,6 +47,12 @@ namespace Webapi.Services
             return playersDtos;
         }
 
+        public async Task<ActionResult<List<RankedPlayer>>> getRanking()
+        {
+            List<PlayerModel> players = await _context.Players.Include(x => x.Matches).ToListAsync();
+            return PlayerModel.GetRanking(players);
+        }
+
         public async Task<ActionResult<GetPlayerDTO>> getById(int id)
         {
             PlayerModel player = await _context.Players.Include(x => x.Matches).FirstOrDefaultAsync(x => x.Id == id);
@@ -64,12 +70,22 @@ namespace Webapi.Services
                 throw new ArgumentException("Name property must be sent");
             }
 
+            List<GetPlayerDTO> players = getAll().Value;
+
             PlayerModel playerModel = new()
             {
                 Name = playerDto.Name,
                 Username = playerDto.Username,
                 Password = playerDto.Password,
             };
+
+
+            if(PlayerModel.PlayerAlreadyExists(playerModel, players))
+            {
+                throw new ArgumentException("Username already exists");
+            }
+
+
             await _context.Players.AddAsync(playerModel);
             await _context.SaveChangesAsync();
             return new
@@ -137,5 +153,6 @@ namespace Webapi.Services
                 })
             };
         }
+
     }
 }

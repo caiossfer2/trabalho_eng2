@@ -61,7 +61,7 @@ namespace Webapi.Services
         public async Task<ActionResult<GetMatchDTO>> create([FromBody] PostMatchDTO match)
         {
 
-            if (match.LoserId == match.WinnerId)
+            if (PlayerModel.AreIdsEqual(match.WinnerId, match.LoserId))
             {
                 throw new ArgumentException("Players ids must be different");
             }

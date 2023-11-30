@@ -15,5 +15,8 @@ namespace Webapi.Services.Interfaces
         public Task<ActionResult<GetPlayerDTO>> update([FromBody] PostPlayerDTO playerDto, int id);
 
         public Task<ActionResult<bool>> delete(int id);
+
+        public Task<ActionResult<List<RankedPlayer>>> getRanking();
+
     }
 }
