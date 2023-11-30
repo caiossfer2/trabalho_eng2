@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/caiossfer/portfolio/tennis-counter/api/api.csproj": {}
+    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/api.csproj": {}
   },
   "projects": {
-    "/home/caiossfer/portfolio/tennis-counter/api/api.csproj": {
+    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/caiossfer/portfolio/tennis-counter/api/api.csproj",
+        "projectUniqueName": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/api.csproj",
         "projectName": "api",
-        "projectPath": "/home/caiossfer/portfolio/tennis-counter/api/api.csproj",
+        "projectPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/api.csproj",
         "packagesPath": "/home/caiossfer/.nuget/packages/",
-        "outputPath": "/home/caiossfer/portfolio/tennis-counter/api/obj/",
+        "outputPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/caiossfer/.nuget/NuGet/NuGet.Config"
@@ -38,6 +38,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.12, )"
@@ -82,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.112/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -2,10 +2,9 @@
 
 namespace api.Data.Dtos
 {
-    public class MatchDTO
+    public class PostMatchDTO
     {
 
-        public int? Id { get; set; }
         public int WinnerId { get; set; }
         public int LoserId { get; set; }
     }

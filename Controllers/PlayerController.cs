@@ -5,6 +5,7 @@ using api.Data.Dtos;
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,8 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<PlayerDto>> getAll()
+        [AllowAnonymous]
+        public ActionResult<List<GetPlayerDTO>> getAll()
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +33,7 @@ namespace api.Controllers
 
             try
             {
-               List<PlayerDto>? players = _service.getAll()?.Value;
+               List<GetPlayerDTO> players = _service.getAll()?.Value;
                 if (players == null)
                 {
                     return NotFound();
@@ -46,7 +48,8 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlayerModel>> getById(int id)
+        [AllowAnonymous]
+        public async Task<ActionResult<GetPlayerDTO>> getById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +58,7 @@ namespace api.Controllers
 
             try
             {
-                PlayerModel? player = (await _service.getById(id))?.Value;
+                GetPlayerDTO player = (await _service.getById(id))?.Value;
                 if (player == null)
                 {
                     return NotFound();
@@ -69,7 +72,8 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlayerModel>> create([FromBody] SimplPlayerDTO playerDto)
+        [AllowAnonymous]
+        public async Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto)
         {
 
             if (!ModelState.IsValid)
@@ -79,7 +83,7 @@ namespace api.Controllers
 
             try
             {
-                PlayerModel? player = (await _service.create(playerDto))?.Value;
+                var player = (await _service.create(playerDto))?.Value;
                 if (player == null)
                 {
                     return BadRequest();
@@ -93,7 +97,8 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PlayerModel>> update([FromBody] SimplPlayerDTO playerDto, int id)
+        [Authorize]
+        public async Task<ActionResult<GetPlayerDTO>> update([FromBody] PostPlayerDTO playerDto, int id)
         {
 
             if (!ModelState.IsValid)
@@ -103,7 +108,7 @@ namespace api.Controllers
 
             try
             {
-                PlayerModel? player = (await _service.update(playerDto, id))?.Value;
+                GetPlayerDTO player = (await _service.update(playerDto, id))?.Value;
                 if (player == null)
                 {
                     return NotFound();
@@ -117,6 +122,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<bool>> delete(int id)
         {
 

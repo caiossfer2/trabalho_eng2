@@ -18,27 +18,27 @@ namespace api.Services
             _context = context;
         }
 
-        public async Task<ActionResult<List<MatchResponseDTO>>?> getAll()
+        public async Task<ActionResult<List<GetMatchDTO>>> getAll()
         {
             List<MatchModel> matches = await _context.Matches.Include(p => p.Players).ToListAsync();
-            var matchesDtos = matches.ConvertAll(x => new MatchResponseDTO
+            var matchesDtos = matches.ConvertAll(x => new GetMatchDTO
             {
                 Id = x.Id,
-                Winner = convertPlayerModelToSimplPlayerDTO(x.Players.Find(p => p.Id == x.WinnerId)),
-                Loser = convertPlayerModelToSimplPlayerDTO(x.Players.Find(p => p.Id == x.LoserId)),
+                Winner = convertPlayerModelToResponseDto(x.Players.Find(p => p.Id == x.WinnerId)),
+                Loser = convertPlayerModelToResponseDto(x.Players.Find(p => p.Id == x.LoserId)),
             });
             return matchesDtos;
         }
 
-        public async Task<ActionResult<MatchResponseDTO>?> getById(int id)
+        public async Task<ActionResult<GetMatchDTO>> getById(int id)
         {
-            MatchModel? match = await _context.Matches.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id);
+            MatchModel match = await _context.Matches.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id);
             if (match == null)
             {
                 throw new ArgumentException("Match not found");
             }
 
-            MatchResponseDTO? response = convertMatchModelToMatchResponseDTO(match);
+            GetMatchDTO response = convertModelToResponseDto(match);
             if (response == null)
             {
                 return null;
@@ -46,9 +46,9 @@ namespace api.Services
             return response;
         }
 
-        public async Task<ActionResult<bool>?> delete(int id)
+        public async Task<ActionResult<bool>> delete(int id)
         {
-            MatchModel? obtainedmatch = await _context.Matches.FindAsync(id);
+            MatchModel obtainedmatch = await _context.Matches.FindAsync(id);
             if (obtainedmatch == null)
             {
                 throw new ArgumentException("Match not found");
@@ -58,7 +58,7 @@ namespace api.Services
             return true;
         }
 
-        public async Task<ActionResult<MatchModel>?> create([FromBody] MatchDTO match)
+        public async Task<ActionResult<GetMatchDTO>> create([FromBody] PostMatchDTO match)
         {
 
             if (match.LoserId == match.WinnerId)
@@ -71,8 +71,8 @@ namespace api.Services
                 throw new ArgumentException("Players ids must be greather than zero");
             }
 
-            PlayerModel? winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.WinnerId);
-            PlayerModel? loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.LoserId);
+            PlayerModel winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.WinnerId);
+            PlayerModel loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == match.LoserId);
             if (winner == null || loser == null)
             {
                 return null;
@@ -86,11 +86,11 @@ namespace api.Services
             matchModel.Players.Add(loser);
             await _context.Matches.AddAsync(matchModel);
             await _context.SaveChangesAsync();
-            return matchModel;
+            return convertModelToResponseDto(matchModel);
         }
 
 
-        public async Task<ActionResult<MatchResponseDTO>?> update([FromBody] MatchDTO matchDto, int id)
+        public async Task<ActionResult<GetMatchDTO>> update([FromBody] PostMatchDTO matchDto, int id)
         {
             if (matchDto.WinnerId < 0 || matchDto.WinnerId < 0)
             {
@@ -102,21 +102,32 @@ namespace api.Services
                 throw new ArgumentException("Players ids must be different");
             }
 
-            MatchModel? obtainedmatch = await _context.Matches.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id);
+            MatchModel obtainedmatch = await _context.Matches.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id);
             if (obtainedmatch == null)
             {
                 throw new ArgumentException("Match not found");
             }
 
-            PlayerModel? winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.WinnerId);
-            addPlayerInListIfHeIsNotAlreadyThere(ref obtainedmatch, winner,  matchDto.WinnerId);
+            PlayerModel winner = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.WinnerId);
+            PlayerModel playerInList = obtainedmatch.Players.Find(p => p.Id == matchDto.WinnerId);
+            //verificar se o winner ja não está no array
+            if (playerInList == null && winner != null)
+            {
+                obtainedmatch.Players.Add(winner);
+            }
 
-            PlayerModel? loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.LoserId);
-            addPlayerInListIfHeIsNotAlreadyThere(ref obtainedmatch, loser, matchDto.LoserId);
+            PlayerModel loser = await _context.Players.FirstOrDefaultAsync(x => x.Id == matchDto.LoserId);
+            playerInList = obtainedmatch.Players.Find(p => p.Id == matchDto.LoserId);
+            //verificar se o loser ja não está no array
+            if (playerInList == null && loser != null)
+            {
+                obtainedmatch.Players.Add(loser);
+            }
+
 
             obtainedmatch.WinnerId = matchDto.WinnerId;
             obtainedmatch.LoserId = matchDto.LoserId;
-            MatchResponseDTO? response = convertMatchModelToMatchResponseDTO(obtainedmatch);
+            GetMatchDTO response = convertModelToResponseDto(obtainedmatch);
             if (response == null)
             {
                 throw new ArgumentException("Error occurred in conversion of data types");
@@ -126,9 +137,7 @@ namespace api.Services
             return response;
         }
 
-
-
-        private SimplPlayerDTO? convertPlayerModelToSimplPlayerDTO(PlayerModel? playerModel)
+        private SimplPlayerDTO convertPlayerModelToResponseDto(PlayerModel playerModel)
         {
             if (playerModel == null)
             {
@@ -137,33 +146,22 @@ namespace api.Services
             SimplPlayerDTO responseDto = new SimplPlayerDTO();
             responseDto.Name = playerModel.Name;
             responseDto.Id = playerModel.Id;
+            responseDto.Username = playerModel.Username;
             return responseDto;
         }
 
-        private MatchResponseDTO? convertMatchModelToMatchResponseDTO(MatchModel matchModel)
+        private GetMatchDTO  convertModelToResponseDto(MatchModel matchModel)
         {
-            MatchResponseDTO response = new MatchResponseDTO();
-            PlayerModel? winner = matchModel.Players.Find(p => p.Id == matchModel.WinnerId);
-            PlayerModel? loser = matchModel.Players.Find(p => p.Id == matchModel.LoserId);
+            GetMatchDTO response = new GetMatchDTO();
+            PlayerModel winner = matchModel.Players.Find(p => p.Id == matchModel.WinnerId);
+            PlayerModel loser = matchModel.Players.Find(p => p.Id == matchModel.LoserId);
             if (winner != null && loser != null)
             {
-                response.Winner = convertPlayerModelToSimplPlayerDTO(winner);
-                response.Loser = convertPlayerModelToSimplPlayerDTO(loser);
+                response.Winner = convertPlayerModelToResponseDto(winner);
+                response.Loser = convertPlayerModelToResponseDto(loser);
                 return response;
             }
             return null;
-        }
-
-        private  void addPlayerInListIfHeIsNotAlreadyThere(ref MatchModel match, PlayerModel? player, int playerId)
-        {
-            if(player == null){
-                throw new ArgumentException("The winner or loser does not exist");
-            }
-            PlayerModel? playerInList = match.Players.Find(p => p.Id == playerId);
-            if (playerInList == null && player != null)
-            {
-                match.Players.Add(player);
-            }
         }
     }
 }

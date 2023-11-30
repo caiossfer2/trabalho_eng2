@@ -6,14 +6,14 @@ namespace api.Services.Interfaces
 {
     public interface IPlayerService
     {
-        public ActionResult<List<PlayerDto>>? getAll();
+        public ActionResult<List<GetPlayerDTO>> getAll();
 
-        public Task<ActionResult<PlayerModel>?> getById(int id);
+        public Task<ActionResult<GetPlayerDTO>> getById(int id);
 
-        public Task<ActionResult<PlayerModel>?> create([FromBody] SimplPlayerDTO playerDto);
+        public Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto);
 
-        public Task<ActionResult<PlayerModel>?> update([FromBody] SimplPlayerDTO playerDto, int id);
+        public Task<ActionResult<GetPlayerDTO>> update([FromBody] PostPlayerDTO playerDto, int id);
 
-        public Task<ActionResult<bool>?> delete(int id);
+        public Task<ActionResult<bool>> delete(int id);
     }
 }

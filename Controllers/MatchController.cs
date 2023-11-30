@@ -6,6 +6,7 @@ using api.Data.Dtos;
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,11 +26,12 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<MatchResponseDTO>>> getAll()
+        [Authorize]
+        public async Task<ActionResult<List<GetMatchDTO>>> getAll()
         {
             try
             {
-                List<MatchResponseDTO>? matches = (await _service.getAll())?.Value;
+                List<GetMatchDTO> matches = (await _service.getAll())?.Value;
                 if (matches == null)
                 {
                     return NotFound();
@@ -44,7 +46,8 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MatchResponseDTO>> getById(int id)
+        [Authorize]
+        public async Task<ActionResult<GetMatchDTO>> getById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +56,7 @@ namespace api.Controllers
 
             try
             {
-                MatchResponseDTO? match = (await _service.getById(id))?.Value;
+                GetMatchDTO match = (await _service.getById(id))?.Value;
                 if (match == null)
                 {
                     return NotFound();
@@ -67,6 +70,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<bool>> delete(int id)
         {
             if (!ModelState.IsValid)
@@ -85,7 +89,8 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MatchModel>> create([FromBody] MatchDTO match)
+        [AllowAnonymous]
+        public async Task<ActionResult<GetMatchDTO>> create([FromBody] PostMatchDTO match)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +99,7 @@ namespace api.Controllers
 
             try
             {
-                MatchModel? matchModel = (await _service.create(match))?.Value;
+                GetMatchDTO matchModel = (await _service.create(match))?.Value;
                 if (matchModel == null)
                 {
                     return BadRequest();
@@ -109,7 +114,8 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<MatchResponseDTO>> update([FromBody] MatchDTO matchDTO, int id)
+        [Authorize]
+        public async Task<ActionResult<GetMatchDTO>> update([FromBody] PostMatchDTO matchDTO, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -118,7 +124,7 @@ namespace api.Controllers
 
             try
             {
-                MatchResponseDTO? obtainedmatch = (await _service.update(matchDTO, id))?.Value;
+                GetMatchDTO obtainedmatch = (await _service.update(matchDTO, id))?.Value;
                 if (obtainedmatch == null)
                 {
                     return NotFound();
