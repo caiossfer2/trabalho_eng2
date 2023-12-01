@@ -17,7 +17,7 @@ namespace Webapi.Services
 
         public async Task<ActionResult<dynamic>> Authenticate(LoginDTO player)
         {
-            PlayerModel? playerModel = await _context.Players.FirstOrDefaultAsync(u => u.Username == player.Username && u.Password == player.Password
+            PlayerModel playerModel = await _context.Players.FirstOrDefaultAsync(u => u.Username == player.Username && u.Password == player.Password
             );
 
             if (playerModel == null)

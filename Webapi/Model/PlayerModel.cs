@@ -80,7 +80,7 @@ namespace Webapi.Model
 
         public static SimplPlayerDTO getBiggestRival(PlayerModel player)
         {
-            List<PlayerWithWins> players = new List<PlayerWithWins>();
+            List<PlayerWithWins> players = new();
 
             foreach (MatchModel match in player.Matches)
             {
@@ -113,7 +113,7 @@ namespace Webapi.Model
                 return new SimplPlayerDTO{ Id = -1, Name = "Nobody", Username = "nobody" };
             }
 
-            return players.OrderBy(p => p.Wins).ToList()[0].Player;
+            return players.OrderByDescending(p => p.Wins).ToList()[0].Player;
         }
 
     }

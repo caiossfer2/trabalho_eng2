@@ -296,8 +296,9 @@ public class UnitTests
 
 
     [Fact]
-    public void GetRanking_Returns()
+    public void GetRanking_ReturnsCorrectRanking()
     {
+        // Arrange
         PlayerModel p1 = new()
         {
             Id = 1,
@@ -383,7 +384,6 @@ public class UnitTests
                 }
         };
 
-        // Arrange
         List<PlayerModel> players = new()
         {
             p1,p2,p3
@@ -424,10 +424,109 @@ public class UnitTests
             },
             Wins = 1
         };
-        
+
         Assert.Equal(JsonConvert.SerializeObject(result[0]), JsonConvert.SerializeObject(pCorrect1));
         Assert.Equal(JsonConvert.SerializeObject(result[1]), JsonConvert.SerializeObject(pCorrect2));
         Assert.Equal(JsonConvert.SerializeObject(result[2]), JsonConvert.SerializeObject(pCorrect3));
+    }
+
+    [Fact]
+    public void getBiggestRival_Returns()
+    {
+        // Arrange
+        PlayerModel player1 = new()
+        {
+            Id = 1,
+            Name = "Player1",
+            Username = "player1",
+        };   
+        
+        PlayerModel player2 = new()
+        {
+            Id = 2,
+            Name = "Player2",
+            Username = "player2",
+        };  
+        
+        PlayerModel player3 = new()
+        {
+            Id = 3,
+            Name = "Player3",
+            Username = "player3",
+        };
+
+        PlayerModel player = new()
+        {
+            Id = 1,
+            Name = "Player1",
+            Username = "player1",
+            Matches = new List<MatchModel>
+                {
+                    new MatchModel{
+                        WinnerId = 2,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player2
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 2,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player2
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 2,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player2
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 1,
+                        LoserId = 2,
+                        Players = new List<PlayerModel>{
+                            player1, player2
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 3,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player3
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 3,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player3
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 3,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player3
+                        }
+                    },
+                    new MatchModel{
+                        WinnerId = 3,
+                        LoserId = 1,
+                        Players = new List<PlayerModel>{
+                            player1, player3
+                        }
+                    },
+                }
+        };
+
+       
+        // Act
+        var result = PlayerModel.getBiggestRival(player);
+
+        // Assert
+        Assert.Equal("player3", result.Username);
     }
 
 
