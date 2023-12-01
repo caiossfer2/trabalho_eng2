@@ -16,7 +16,7 @@ namespace Webapi.Services.Interfaces
 
         public Task<ActionResult<bool>> delete(int id);
 
-        public Task<ActionResult<List<RankedPlayer>>> getRanking();
+        public Task<ActionResult<List<PlayerWithWins>>> getRanking();
 
     }
 }

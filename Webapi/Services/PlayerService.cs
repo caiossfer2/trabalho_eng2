@@ -47,7 +47,7 @@ namespace Webapi.Services
             return playersDtos;
         }
 
-        public async Task<ActionResult<List<RankedPlayer>>> getRanking()
+        public async Task<ActionResult<List<PlayerWithWins>>> getRanking()
         {
             List<PlayerModel> players = await _context.Players.Include(x => x.Matches).ToListAsync();
             return PlayerModel.GetRanking(players);

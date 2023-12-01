@@ -49,11 +49,11 @@ namespace Webapi.Controllers
 
         [HttpGet("ranking")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<RankedPlayer>>> getRanking()
+        public async Task<ActionResult<List<PlayerWithWins>>> getRanking()
         {
             try
             {
-                List<RankedPlayer> ranking = (await _service.getRanking())?.Value;
+                List<PlayerWithWins> ranking = (await _service.getRanking())?.Value;
                 if (ranking == null)
                 {
                     return NotFound();
