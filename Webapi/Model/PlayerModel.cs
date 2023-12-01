@@ -21,6 +21,7 @@ namespace Webapi.Model
 
         public static int GetNumberOfMatchesPlayed(PlayerModel player)
         {
+            if (player.Matches == null) return 0;
             return player.Matches.Count;
         }
         public static int GetNumberOfWins(PlayerModel player)
@@ -38,7 +39,9 @@ namespace Webapi.Model
         }
         public static double GetPercentageOfWins(PlayerModel player)
         {
-            return (GetNumberOfWins(player) / GetNumberOfMatchesPlayed(player)) * 100;
+            double numberOfMatches = GetNumberOfMatchesPlayed(player);
+            if(numberOfMatches == 0) return 0;
+            return (GetNumberOfWins(player) / numberOfMatches) * 100;
         }
 
         public static bool AreIdsEqual(int id1, int id2)
@@ -68,7 +71,7 @@ namespace Webapi.Model
             {
                 int wins = GetNumberOfWins(player);
                 System.Console.WriteLine(wins);
-                ranking.Add(new PlayerWithWins { player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = wins });
+                ranking.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = wins });
             }
 
             return ranking.OrderByDescending(p => p.Wins).ToList();
@@ -88,7 +91,7 @@ namespace Webapi.Model
                         if (match.WinnerId == matchPlayer.Id)
                         {
                             PlayerModel winner = matchPlayer;
-                            players.Add(new PlayerWithWins { player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = 0 });
+                            players.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = 0 });
                         }
                     }
                 }
@@ -98,7 +101,7 @@ namespace Webapi.Model
             {
                 foreach (MatchModel match in player.Matches)
                 {
-                    if (playerWithWins.player.Id == match.WinnerId)
+                    if (playerWithWins.Player.Id == match.WinnerId)
                     {
                         playerWithWins.Wins++;
                     }
@@ -110,7 +113,7 @@ namespace Webapi.Model
                 return new SimplPlayerDTO{ Id = -1, Name = "Nobody", Username = "nobody" };
             }
 
-            return players.OrderBy(p => p.Wins).ToList()[0].player;
+            return players.OrderBy(p => p.Wins).ToList()[0].Player;
         }
 
     }

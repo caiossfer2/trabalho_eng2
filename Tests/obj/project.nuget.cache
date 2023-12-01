@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "M0pzKy0sCqN7jjUxDiRwfKBECQoGiL1GSRVctr3AC3SZSWMmCKUfQbknYRfoSH6sdZ7huvR5guspCS7ylfk5YQ==",
+  "dgSpecHash": "1XPhMLfQGsO63P47/F4RIXRIlVeGctv26Oeh8ojDuGJSkoqtVbsyupzJQK/gYbwY8MJ6FmpHTJLB2mOCMnekAQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
@@ -63,7 +63,7 @@
     "C:\\Users\\dtiDigital\\.nuget\\packages\\moq\\4.20.70\\moq.4.20.70.nupkg.sha512",
     "C:\\Users\\dtiDigital\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
     "C:\\Users\\dtiDigital\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\dtiDigital\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\dtiDigital\\.nuget\\packages\\nuget.frameworks\\6.5.0\\nuget.frameworks.6.5.0.nupkg.sha512",
     "C:\\Users\\dtiDigital\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Users\\dtiDigital\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

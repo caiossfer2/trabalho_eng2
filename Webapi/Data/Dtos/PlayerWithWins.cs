@@ -2,7 +2,7 @@
 {
     public class PlayerWithWins
     {
-        public SimplPlayerDTO player {  get; set; }
+        public SimplPlayerDTO Player {  get; set; }
         public int Wins { get; set; }
     }
 }
