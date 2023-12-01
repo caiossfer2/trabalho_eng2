@@ -70,7 +70,7 @@ namespace Webapi.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<GetPlayerDTO>> getById(int id)
+        public async Task<ActionResult<dynamic>> getById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Webapi.Controllers
 
             try
             {
-                GetPlayerDTO player = (await _service.getById(id))?.Value;
+                var player = (await _service.getById(id))?.Value;
                 if (player == null)
                 {
                     return NotFound();

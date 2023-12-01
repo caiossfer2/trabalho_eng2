@@ -53,14 +53,24 @@ namespace Webapi.Services
             return PlayerModel.GetRanking(players);
         }
 
-        public async Task<ActionResult<GetPlayerDTO>> getById(int id)
+        public async Task<ActionResult<dynamic>> getById(int id)
         {
             PlayerModel player = await _context.Players.Include(x => x.Matches).FirstOrDefaultAsync(x => x.Id == id);
             if (player == null)
             {
                 throw new ArgumentException("Player not found");
             }
-            return convertPlayerModelToGetPlayer(player);
+
+            return new
+            {
+                player.Id,
+                player.Username,
+                player.Name,
+                NumberOfWins = PlayerModel.GetNumberOfWins(player),
+                NumberOfMatches = PlayerModel.GetNumberOfMatchesPlayed(player),
+                PercentageOfWins = PlayerModel.GetPercentageOfWins(player),
+                BiggestRival = PlayerModel.getBiggestRival(player),
+            };
         }
 
         public async Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto)
@@ -90,8 +100,8 @@ namespace Webapi.Services
             await _context.SaveChangesAsync();
             return new
             {
-                Username = playerDto.Username,
-                Name = playerDto.Name,
+                playerDto.Username,
+                playerDto.Name,
             };
         }
 

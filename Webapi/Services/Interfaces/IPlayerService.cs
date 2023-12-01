@@ -8,7 +8,7 @@ namespace Webapi.Services.Interfaces
     {
         public ActionResult<List<GetPlayerDTO>> getAll();
 
-        public Task<ActionResult<GetPlayerDTO>> getById(int id);
+        public Task<ActionResult<dynamic>> getById(int id);
 
         public Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto);
 
