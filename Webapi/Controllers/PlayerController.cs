@@ -1,13 +1,8 @@
-using System;
 using System.Net;
-using Webapi.Data;
 using Webapi.Data.Dtos;
-using Webapi.Model;
-using Webapi.Services;
 using Webapi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Webapi.Controllers
 {
@@ -24,7 +19,7 @@ namespace Webapi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<GetPlayerDTO>> getAll()
+        public ActionResult<List<GetPlayerDTO>> GetAll()
         {
             if (!ModelState.IsValid)
             {
@@ -33,7 +28,7 @@ namespace Webapi.Controllers
 
             try
             {
-                List<GetPlayerDTO> players = _service.getAll()?.Value;
+                List<GetPlayerDTO> players = _service.GetAll()?.Value;
                 if (players == null)
                 {
                     return NotFound();
@@ -53,7 +48,7 @@ namespace Webapi.Controllers
         {
             try
             {
-                List<PlayerWithWins> ranking = (await _service.getRanking())?.Value;
+                List<PlayerWithWins> ranking = (await _service.GetRanking())?.Value;
                 if (ranking == null)
                 {
                     return NotFound();
@@ -70,7 +65,7 @@ namespace Webapi.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> getById(int id)
+        public async Task<ActionResult<dynamic>> GetById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -79,7 +74,7 @@ namespace Webapi.Controllers
 
             try
             {
-                var player = (await _service.getById(id))?.Value;
+                var player = (await _service.GetById(id))?.Value;
                 if (player == null)
                 {
                     return NotFound();
@@ -94,7 +89,7 @@ namespace Webapi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto)
+        public async Task<ActionResult<dynamic>> Create([FromBody] PostPlayerDTO playerDto)
         {
 
             if (!ModelState.IsValid)
@@ -104,7 +99,7 @@ namespace Webapi.Controllers
 
             try
             {
-                var player = (await _service.create(playerDto))?.Value;
+                var player = (await _service.Create(playerDto))?.Value;
                 if (player == null)
                 {
                     return BadRequest();
@@ -119,7 +114,7 @@ namespace Webapi.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<ActionResult<GetPlayerDTO>> update([FromBody] PostPlayerDTO playerDto, int id)
+        public async Task<ActionResult<GetPlayerDTO>> Update([FromBody] PostPlayerDTO playerDto, int id)
         {
 
             if (!ModelState.IsValid)
@@ -129,7 +124,7 @@ namespace Webapi.Controllers
 
             try
             {
-                GetPlayerDTO player = (await _service.update(playerDto, id))?.Value;
+                GetPlayerDTO player = (await _service.Update(playerDto, id))?.Value;
                 if (player == null)
                 {
                     return NotFound();
@@ -154,7 +149,7 @@ namespace Webapi.Controllers
 
             try
             {
-                return Ok((await _service.delete(id))?.Value);
+                return Ok((await _service.Delete(id))?.Value);
             }
             catch (ArgumentException e)
             {

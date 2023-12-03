@@ -6,13 +6,13 @@ namespace Webapi.Services.Interfaces
 {
     public interface IMatchService
     {
-        public Task<ActionResult<List<GetMatchDTO>>> getAll();
+        public Task<ActionResult<List<GetMatchDTO>>> GetAll();
 
-        public Task<ActionResult<GetMatchDTO>> getById(int id);
+        public Task<ActionResult<GetMatchDTO>> GetById(int id);
 
-        public Task<ActionResult<bool>> delete(int id);
-        public Task<ActionResult<GetMatchDTO>> create([FromBody] PostMatchDTO match);
+        public Task<ActionResult<bool>> Delete(int id);
+        public Task<ActionResult<GetMatchDTO>> Create([FromBody] PostMatchDTO match);
 
-        public Task<ActionResult<GetMatchDTO>> update([FromBody] PostMatchDTO matchDTO, int id);
+        public Task<ActionResult<GetMatchDTO>> Update([FromBody] PostMatchDTO matchDTO, int id);
     }
 }

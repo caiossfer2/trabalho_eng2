@@ -17,7 +17,7 @@ namespace Webapi.Services
         {
             _context = context;
         }
-        public ActionResult<List<GetPlayerDTO>> getAll()
+        public ActionResult<List<GetPlayerDTO>> GetAll()
         {
             var players = _context.Players.Select(p => new
             {
@@ -47,13 +47,13 @@ namespace Webapi.Services
             return playersDtos;
         }
 
-        public async Task<ActionResult<List<PlayerWithWins>>> getRanking()
+        public async Task<ActionResult<List<PlayerWithWins>>> GetRanking()
         {
             List<PlayerModel> players = await _context.Players.Include(x => x.Matches).ToListAsync();
             return PlayerModel.GetRanking(players);
         }
 
-        public async Task<ActionResult<dynamic>> getById(int id)
+        public async Task<ActionResult<GetPlayerByIdDTO>> GetById(int id)
         {
             PlayerModel player = await _context.Players.Include(x => x.Matches).FirstOrDefaultAsync(x => x.Id == id);
             if (player == null)
@@ -61,11 +61,11 @@ namespace Webapi.Services
                 throw new ArgumentException("Player not found");
             }
 
-            return new
+            return new GetPlayerByIdDTO
             {
-                player.Id,
-                player.Username,
-                player.Name,
+                Id = player.Id,
+                Username = player.Username,
+                Name = player.Name,
                 NumberOfWins = PlayerModel.GetNumberOfWins(player),
                 NumberOfMatches = PlayerModel.GetNumberOfMatchesPlayed(player),
                 PercentageOfWins = PlayerModel.GetPercentageOfWins(player),
@@ -73,14 +73,14 @@ namespace Webapi.Services
             };
         }
 
-        public async Task<ActionResult<dynamic>> create([FromBody] PostPlayerDTO playerDto)
+        public async Task<ActionResult<CreatePlayerReturnDTO>> Create([FromBody] PostPlayerDTO playerDto)
         {
             if (playerDto.Name == null)
             {
                 throw new ArgumentException("Name property must be sent");
             }
 
-            List<GetPlayerDTO> players = getAll().Value;
+            List<GetPlayerDTO> players = GetAll().Value;
 
             PlayerModel playerModel = new()
             {
@@ -98,14 +98,14 @@ namespace Webapi.Services
 
             await _context.Players.AddAsync(playerModel);
             await _context.SaveChangesAsync();
-            return new
+            return new CreatePlayerReturnDTO
             {
-                playerDto.Username,
-                playerDto.Name,
+                Username = playerDto.Username,
+                Name = playerDto.Name,
             };
         }
 
-        public async Task<ActionResult<GetPlayerDTO>> update([FromBody] PostPlayerDTO playerDto, int id)
+        public async Task<ActionResult<GetPlayerDTO>> Update([FromBody] PostPlayerDTO playerDto, int id)
         {
             if (playerDto.Name == null)
             {
@@ -129,7 +129,7 @@ namespace Webapi.Services
             return convertPlayerModelToGetPlayer(obtainedPlayer);
         }
 
-        public async Task<ActionResult<bool>> delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             PlayerModel obtainedPlayer = await _context.Players.FindAsync(id);
             if (obtainedPlayer == null)

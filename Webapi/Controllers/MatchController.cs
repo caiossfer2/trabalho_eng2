@@ -31,7 +31,7 @@ namespace Webapi.Controllers
         {
             try
             {
-                List<GetMatchDTO> matches = (await _service.getAll())?.Value;
+                List<GetMatchDTO> matches = (await _service.GetAll())?.Value;
                 if (matches == null)
                 {
                     return NotFound();
@@ -56,7 +56,7 @@ namespace Webapi.Controllers
 
             try
             {
-                GetMatchDTO match = (await _service.getById(id))?.Value;
+                GetMatchDTO match = (await _service.GetById(id))?.Value;
                 if (match == null)
                 {
                     return NotFound();
@@ -80,7 +80,7 @@ namespace Webapi.Controllers
 
             try
             {
-                return Ok((await _service.delete(id))?.Value);
+                return Ok((await _service.Delete(id))?.Value);
             }
             catch (ArgumentException e)
             {
@@ -99,7 +99,7 @@ namespace Webapi.Controllers
 
             try
             {
-                GetMatchDTO matchModel = (await _service.create(match))?.Value;
+                GetMatchDTO matchModel = (await _service.Create(match))?.Value;
                 if (matchModel == null)
                 {
                     return BadRequest();
@@ -124,7 +124,7 @@ namespace Webapi.Controllers
 
             try
             {
-                GetMatchDTO obtainedmatch = (await _service.update(matchDTO, id))?.Value;
+                GetMatchDTO obtainedmatch = (await _service.Update(matchDTO, id))?.Value;
                 if (obtainedmatch == null)
                 {
                     return NotFound();

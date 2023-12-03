@@ -18,7 +18,7 @@ namespace Webapi.Services
             _context = context;
         }
 
-        public async Task<ActionResult<List<GetMatchDTO>>> getAll()
+        public async Task<ActionResult<List<GetMatchDTO>>> GetAll()
         {
             List<MatchModel> matches = await _context.Matches.Include(p => p.Players).ToListAsync();
             var matchesDtos = matches.ConvertAll(x => new GetMatchDTO
@@ -30,7 +30,7 @@ namespace Webapi.Services
             return matchesDtos;
         }
 
-        public async Task<ActionResult<GetMatchDTO>> getById(int id)
+        public async Task<ActionResult<GetMatchDTO>> GetById(int id)
         {
             MatchModel match = await _context.Matches.Include(x => x.Players).FirstOrDefaultAsync(x => x.Id == id);
             if (match == null)
@@ -46,7 +46,7 @@ namespace Webapi.Services
             return response;
         }
 
-        public async Task<ActionResult<bool>> delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             MatchModel obtainedmatch = await _context.Matches.FindAsync(id);
             if (obtainedmatch == null)
@@ -58,7 +58,7 @@ namespace Webapi.Services
             return true;
         }
 
-        public async Task<ActionResult<GetMatchDTO>> create([FromBody] PostMatchDTO match)
+        public async Task<ActionResult<GetMatchDTO>> Create([FromBody] PostMatchDTO match)
         {
 
             if (PlayerModel.AreIdsEqual(match.WinnerId, match.LoserId))
@@ -90,7 +90,7 @@ namespace Webapi.Services
         }
 
 
-        public async Task<ActionResult<GetMatchDTO>> update([FromBody] PostMatchDTO matchDto, int id)
+        public async Task<ActionResult<GetMatchDTO>> Update([FromBody] PostMatchDTO matchDto, int id)
         {
             if (matchDto.WinnerId < 0 || matchDto.WinnerId < 0)
             {

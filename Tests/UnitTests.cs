@@ -439,15 +439,15 @@ public class UnitTests
             Id = 1,
             Name = "Player1",
             Username = "player1",
-        };   
-        
+        };
+
         PlayerModel player2 = new()
         {
             Id = 2,
             Name = "Player2",
             Username = "player2",
-        };  
-        
+        };
+
         PlayerModel player3 = new()
         {
             Id = 3,
@@ -462,13 +462,6 @@ public class UnitTests
             Username = "player1",
             Matches = new List<MatchModel>
                 {
-                    new MatchModel{
-                        WinnerId = 2,
-                        LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player2
-                        }
-                    },
                     new MatchModel{
                         WinnerId = 2,
                         LoserId = 1,
@@ -511,17 +504,10 @@ public class UnitTests
                             player1, player3
                         }
                     },
-                    new MatchModel{
-                        WinnerId = 3,
-                        LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player3
-                        }
-                    },
                 }
         };
 
-       
+
         // Act
         var result = PlayerModel.getBiggestRival(player);
 

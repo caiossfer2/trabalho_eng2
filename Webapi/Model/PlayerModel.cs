@@ -91,7 +91,7 @@ namespace Webapi.Model
                         if (match.WinnerId == matchPlayer.Id)
                         {
                             PlayerModel winner = matchPlayer;
-                            players.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = 0 });
+                            players.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = winner.Id, Name = winner.Name, Username = winner.Username }, Wins = 0 });
                         }
                     }
                 }

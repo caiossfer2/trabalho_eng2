@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj": {}
+    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj": {
+    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj",
+        "projectUniqueName": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj",
         "projectName": "Webapi",
-        "projectPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj",
-        "packagesPath": "C:\\Users\\dtiDigital\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\obj\\",
+        "projectPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj",
+        "packagesPath": "/home/caiossfer/.nuget/packages/",
+        "outputPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\dtiDigital\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/caiossfer/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -92,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
         }
       }
     }
