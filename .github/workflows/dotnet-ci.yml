@@ -2,9 +2,9 @@ name: dotnet_ci
 
 on:
   push:
-    branches: [ "part_2" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "part_2" ]
+    branches: [ "main" ]
 
 jobs:
   build:
