@@ -431,16 +431,9 @@ public class UnitTests
     }
 
     [Fact]
-    public void getBiggestRival_Returns()
+    public void getBiggestRival_ReturnsCorrect()
     {
         // Arrange
-        PlayerModel player1 = new()
-        {
-            Id = 1,
-            Name = "Player1",
-            Username = "player1",
-        };
-
         PlayerModel player2 = new()
         {
             Id = 2,
@@ -465,54 +458,36 @@ public class UnitTests
                     new MatchModel{
                         WinnerId = 2,
                         LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player2
-                        }
                     },
                     new MatchModel{
                         WinnerId = 2,
                         LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player2
-                        }
                     },
                     new MatchModel{
                         WinnerId = 1,
-                        LoserId = 2,
-                        Players = new List<PlayerModel>{
-                            player1, player2
-                        }
+                        LoserId = 2,  
                     },
                     new MatchModel{
                         WinnerId = 3,
                         LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player3
-                        }
                     },
                     new MatchModel{
                         WinnerId = 3,
-                        LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player3
-                        }
+                        LoserId = 1,                       
                     },
                     new MatchModel{
                         WinnerId = 3,
-                        LoserId = 1,
-                        Players = new List<PlayerModel>{
-                            player1, player3
-                        }
+                        LoserId = 1,                     
                     },
                 }
         };
 
 
         // Act
-        var result = PlayerModel.getBiggestRival(player);
+        var result = PlayerModel.GetBiggestRival(player);
 
         // Assert
-        Assert.Equal("player3", result.Username);
+        Assert.Equal(3, result);
     }
 
     [Fact]

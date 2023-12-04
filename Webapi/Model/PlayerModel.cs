@@ -40,7 +40,7 @@ namespace Webapi.Model
         public static double GetPercentageOfWins(PlayerModel player)
         {
             double numberOfMatches = GetNumberOfMatchesPlayed(player);
-            if(numberOfMatches == 0) return 0;
+            if (numberOfMatches == 0) return 0;
             return (GetNumberOfWins(player) / numberOfMatches) * 100;
         }
 
@@ -77,7 +77,7 @@ namespace Webapi.Model
         }
 
 
-        public static SimplPlayerDTO getBiggestRival(PlayerModel player)
+        public static int GetBiggestRival(PlayerModel player)
         {
             List<PlayerWithWins> players = new();
 
@@ -85,15 +85,9 @@ namespace Webapi.Model
             {
                 if (match.LoserId == player.Id)
                 {
-                    foreach (PlayerModel matchPlayer in match.Players)
-                    {
-                        if (match.WinnerId == matchPlayer.Id)
-                        {
-                            PlayerModel winner = matchPlayer;
-                            players.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = winner.Id, Name = winner.Name, Username = winner.Username }, Wins = 0 });
-                        }
-                    }
+                    players.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = match.WinnerId }, Wins = 0 });
                 }
+
             }
 
             foreach (PlayerWithWins playerWithWins in players)
@@ -107,12 +101,13 @@ namespace Webapi.Model
                 }
             }
 
+
             if (players.Count == 0)
             {
-                return new SimplPlayerDTO{ Id = -1, Name = "Nobody", Username = "nobody" };
+                return -1;
             }
 
-            return players.OrderByDescending(p => p.Wins).ToList()[0].Player;
+            return players.OrderByDescending(p => p.Wins).ToList()[0].Player.Id;
         }
 
     }

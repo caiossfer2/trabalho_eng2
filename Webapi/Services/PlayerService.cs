@@ -61,6 +61,20 @@ namespace Webapi.Services
                 throw new ArgumentException("Player not found");
             }
 
+            PlayerModel biggestRivalPlayerModel = await _context.Players.Include(x => x.Matches).FirstOrDefaultAsync(x => x.Id == PlayerModel.GetBiggestRival(player));
+            SimplPlayerDTO biggestRival = new(){
+                Id = -1,
+                Name = "nobody",
+                Username = "nobody",
+            };
+
+            if(biggestRivalPlayerModel != null){
+                biggestRival.Id = biggestRivalPlayerModel.Id;
+                biggestRival.Name = biggestRivalPlayerModel.Name;
+                biggestRival.Username = biggestRivalPlayerModel.Username;
+            }
+            
+
             return new GetPlayerByIdDTO
             {
                 Id = player.Id,
@@ -69,7 +83,7 @@ namespace Webapi.Services
                 NumberOfWins = PlayerModel.GetNumberOfWins(player),
                 NumberOfMatches = PlayerModel.GetNumberOfMatchesPlayed(player),
                 PercentageOfWins = PlayerModel.GetPercentageOfWins(player),
-                BiggestRival = PlayerModel.getBiggestRival(player),
+                BiggestRival = biggestRival,
             };
         }
 
@@ -90,7 +104,7 @@ namespace Webapi.Services
             };
 
 
-            if(PlayerModel.PlayerAlreadyExists(playerModel, players))
+            if (PlayerModel.PlayerAlreadyExists(playerModel, players))
             {
                 throw new ArgumentException("Username already exists");
             }
