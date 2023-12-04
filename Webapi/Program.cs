@@ -67,8 +67,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Version = "v1",
-        Title = "Api de login",
-        Description = "Login de usu�rio com JWT"
+        Title = "Tennis Counter",
+        Description = "Tennis Counter API"
     });
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
