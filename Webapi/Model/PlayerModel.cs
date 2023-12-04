@@ -70,7 +70,6 @@ namespace Webapi.Model
             foreach (PlayerModel player in players)
             {
                 int wins = GetNumberOfWins(player);
-                System.Console.WriteLine(wins);
                 ranking.Add(new PlayerWithWins { Player = new SimplPlayerDTO { Id = player.Id, Name = player.Name, Username = player.Username }, Wins = wins });
             }
 

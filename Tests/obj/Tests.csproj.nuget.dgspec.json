@@ -1,33 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Tests/Tests.csproj": {}
+    "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Tests/Tests.csproj": {
+    "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Tests/Tests.csproj",
+        "projectUniqueName": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Tests/Tests.csproj",
-        "packagesPath": "/home/caiossfer/.nuget/packages/",
-        "outputPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Tests/obj/",
+        "projectPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\Tests.csproj",
+        "packagesPath": "C:\\Users\\dtiDigital\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/caiossfer/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\dtiDigital\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj": {
-                "projectPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj"
+              "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj": {
+                "projectPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj"
               }
             }
           }
@@ -95,26 +97,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj": {
+    "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj",
+        "projectUniqueName": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj",
         "projectName": "Webapi",
-        "projectPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/Webapi.csproj",
-        "packagesPath": "/home/caiossfer/.nuget/packages/",
-        "outputPath": "/home/caiossfer/Área de Trabalho/eng2/trabalho_eng2/Webapi/obj/",
+        "projectPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\Webapi.csproj",
+        "packagesPath": "C:\\Users\\dtiDigital\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dtiDigital\\Desktop\\Projeto\\trabalho_eng2\\Webapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/caiossfer/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\dtiDigital\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -185,7 +189,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

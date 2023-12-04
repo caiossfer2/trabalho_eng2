@@ -515,6 +515,34 @@ public class UnitTests
         Assert.Equal("player3", result.Username);
     }
 
+    [Fact]
+    public void GetRanking_ReturnsCorrectOrder()
+    {
+        // Arrange
+        var players = new List<PlayerModel>
+        {
+            new PlayerModel { Id = 1, Name = "Player 1", Username = "player1" },
+            new PlayerModel { Id = 2, Name = "Player 2", Username = "player2" },
+            new PlayerModel { Id = 3, Name = "Player 3", Username = "player3" }
+        };
+
+        players[0].Matches.Add(new MatchModel { WinnerId = 1 });
+        players[0].Matches.Add(new MatchModel { WinnerId = 1 });
+        players[1].Matches.Add(new MatchModel { WinnerId = 2 });
+        players[1].Matches.Add(new MatchModel { WinnerId = 2 });
+        players[1].Matches.Add(new MatchModel { WinnerId = 1 });
+        players[2].Matches.Add(new MatchModel { WinnerId = 3 });
+
+        // Act
+        List<PlayerWithWins> result = PlayerModel.GetRanking(players);
+
+        // Assert
+        Assert.Equal(3, result.Count);
+        Assert.Equal("Player 1", result[0].Player.Name);
+        Assert.Equal("Player 2", result[1].Player.Name);
+        Assert.Equal("Player 3", result[2].Player.Name);
+    }
+
 
 
 
